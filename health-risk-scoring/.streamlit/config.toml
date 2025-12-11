@@ -1,0 +1,6 @@
+[theme]
+primaryColor="#fff"             # white accent
+backgroundColor="#05010B"          # deep space black
+secondaryBackgroundColor="#11111A" # card/section background
+textColor="#fff"                # slightly warm off-white
+font="helvetica neue, helvetica, sans serif"

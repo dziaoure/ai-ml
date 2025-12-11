@@ -12,12 +12,24 @@ from pathlib import Path
 #   1. App Configuration
 # ----------------------------------------------
 st.set_page_config(
-    page_title = 'Health Risk Scorig Demo',
+    page_title = 'Health Risk Scoring Demo',
     page_icon = '❤️',
     layout = 'centered'
 )
 
-st.title('Health Rish Scoring Model (Demo)')
+
+#-----------------------------------------------
+#   1. App Styles
+# ----------------------------------------------
+def load_css():
+    css_path = Path(__file__).resolve().parent / "styles.css"
+
+    with open(css_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html = True)
+
+load_css()
+
+st.title('Health Risk Scoring Model')
 st.markdown(
     '''
     This app uses a logistic regression model trained on a Framingham-style dataset 
@@ -69,10 +81,35 @@ def risk_tier(prob: float) -> str:
         return 'Medium'
     else:
         return 'High'
+    
+def styled_risk_info(label, value, tier):
+    colors = {
+        "Low": "#FFFFFF",
+        "Medium": "#ff9f0a",
+        "High": "#ff453a"
+    }
+
+    color = colors.get(tier, "#FFFFFF")
+
+    html = f"""
+    <div class="stMetric" data-testid="stMetric">
+        <p style="margin: 0; padding: 0;">{label}</p>
+        <div data-testid="stMetricValue">
+            <div style="color: {color}; line-height: normal;">
+                {value}
+            </div>
+        </div>
+    </div>
+    """
+
+    st.markdown(html, unsafe_allow_html=True)
+
 
 #-----------------------------------------------
 #   4. Input form
 # ----------------------------------------------
+st.markdown('<div class="main">', unsafe_allow_html = True)
+
 st.subheader('Enter Patient Information')
 st.markdown(
     '''
@@ -197,16 +234,11 @@ if submitted:
     col_res1, col_res2 = st.columns(2)
 
     with col_res1:
-        st.metric(
-            label = 'Estimated Risk Probability',
-            value = f'{prob:.1%}'
-        )
+        styled_risk_info(label = 'Estimated Risk Probability', value = f'{prob:.1%}', tier = tier)
 
     with col_res2:
-        st.metric(
-            label = 'Risk Tier',
-            value = tier
-        )
+        styled_risk_info(label = 'Risk Tier', value = tier, tier = tier)
+
 
     st.markdown('---')
     st.markdown(
@@ -272,4 +304,4 @@ if submitted:
         '''
     )
 
-
+st.markdown('</div>', unsafe_allow_html = True)
