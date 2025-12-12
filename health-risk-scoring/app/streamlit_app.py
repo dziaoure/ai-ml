@@ -29,6 +29,11 @@ def load_css():
 
 load_css()
 
+col1, col2, col3 = st.columns([2, 1, 2])
+with col2:
+    st.image("../images/medical-symbol.png", width=200)
+
+
 st.title('Health Risk Scoring Model')
 st.markdown(
     '''
@@ -50,7 +55,6 @@ def load_artifacts():
 
     model = joblib.load(model_path)
     df = pd.read_csv(data_path)
-    print(f'DF: {df.head()}')
     X = df.drop(columns = ['TenYearCHD'])
 
     preprocessor = model.named_steps['preprocessor']
