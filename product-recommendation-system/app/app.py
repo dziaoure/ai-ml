@@ -105,10 +105,33 @@ def _simple_explanations(item_cf_model, train: pd.DataFrame, recs: List[int], us
 #-----------------------------------------------
 #           Streamlit UI
 #-----------------------------------------------
-st.set_page_config(page_title = 'Movie Recommender - MovieLens', layout = 'wide')
+st.set_page_config(page_title = 'Movie Recommender', layout = 'wide')
 
-st.title('🎬 Movie Recommender - MovieLens')
-st.caption('Popularity baseline vs Item-based collaborative filtering (cosine similarity)')
+col1, col2, col3 = st.columns([1, 3, 1])
+with col2:
+    image_path = Path(__file__).resolve().parent.parent / 'images/movie-reel.png'
+    st.image(image_path)
+
+st.title('Movie Recommender')
+
+caption_html = """
+    <p style="text-align: center;color:#fff; opacity:0.65; margin-top: 0;">
+    Popularity baseline vs Item-based collaborative filtering (cosine similarity)
+    </p>
+    """
+st.markdown(caption_html, unsafe_allow_html=True)
+
+
+#-----------------------------------------------
+#   App Styles
+# ----------------------------------------------
+def load_css():
+    css_path = Path(__file__).resolve().parent / "styles.css"
+
+    with open(css_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html = True)
+
+load_css()
 
 data_dir = PROJECT_ROOT / 'data'
 
@@ -131,7 +154,7 @@ with st.sidebar:
 
     st.divider()
     model_choice = st.selectbox('Model', ['Popularity (baseline)', 'FIltering (item-based CF)'])
-    k = st.slider('Top-K recommendations', min_value = 5, max_value = 25, value = 10, step = 5)
+    k = st.slider('Top-K recommendations', min_value = 5, max_value = 25, value = 15, step = 5)
 
     st.divider()
     pop_min_ratings = st.slider('Popularity min ratings per movie', min_value = 10, max_value = 200, value = 50, step = 10)
@@ -143,26 +166,29 @@ with st.sidebar:
 
 train, test = split_data(ratings, test_ratio=test_ratio, min_ratings_per_user=min_ratings_per_user)
 
-st.write(
-    f'**Train:** {len(train):,} ratings • **Test:** {len(test):,} ratings • '
-    f'**Users:** {train["userId"].nunique():,} • **Movies:** {train["movieId"].nunique():,}'
-)
+stats_html = f"""
+    <p style="text-align:center; margin-bottom:20px; padding-bottom:30px; border-bottom:1px solid rgba(255, 255, 255, 0.35);">
+        <strong>Train:</strong> {len(train):,} ratings • <strong>Test:</strong> {len(test):,} ratings •
+        <strong>Users:</strong> {train["userId"].nunique():,} • <strong>Movies:</strong> {train["movieId"].nunique():,}
+    </p>
+    """
+st.markdown(stats_html, unsafe_allow_html=True)
 
 # Choose a user
 user_ids = sorted(train['userId'].unique().tolist())
 default_user = user_ids[min(0, len(user_ids) - 1)]
-user_id = st.selectbox('Pick a user', user_ids, default_user)
+user_id = st.selectbox('Pick a user', user_ids, default_user, width=300)
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader('Recent User History (train)')
+    st.subheader('Recent User History')
     hist = _recent_history(train, movies, user_id = user_id, n = 15)
 
     if hist.empty:
         st.info('No history found for this user during training')
     else:
-        st.dataframe(hist, use_container_width = True)
+        st.dataframe(hist, width='stretch')
 
 with col2:
     st.subheader('Recommendations')
@@ -175,7 +201,7 @@ with col2:
     if model_choice.startswith('Popularity'):
         recommended = pop_model.recommend(user_id=user_id, train_df=train, k=k)
         rec_df = _movies_df(movies, recommended)
-        st.dataframe(rec_df, use_container_width=True)
+        st.dataframe(rec_df, width='stretch')
         st.caption('Baseline: Top popular movies, excluding those already seen during training')
     else:
         recommended = recommend_for_user_item_cf(
@@ -186,11 +212,25 @@ with col2:
             candidate_pool=candidate_pool
         )
 
+        # Automatic fallback to popularity
+        use_fallback = False
+
         if not recommended:
-            st.warning('No recommendations found (user may be a cold-start or may have sparse overlap)')
+            #st.warning('No recommendations found (user may be a cold-start or may have sparse overlap)')
+            recommended = pop_model.recommend(user_id=user_id, train_df=train, k=k)
+            use_fallback = True
+
+        rec_df = _movies_df(movies, recommended)
+        st.dataframe(rec_df, width='stretch')
+
+        if use_fallback:
+            st.caption(
+                'Fallback applied. Collaborative filtering could no generate recommendations, '
+                'so popularity-based recommendations were used instead'
+            )
         else:
-            rec_df = _movies_df(movies, recommended)
-            st.dataframe(rec_df, use_container_width=True)
+            #rec_df = _movies_df(movies, recommended)
+            #st.dataframe(rec_df, use_container_width=True)
 
             # Simple explanations
             expl = _simple_explanations(item_cf_model, train, recommended, user_id=user_id, top_n=2)
@@ -202,7 +242,7 @@ with col2:
                 if because:
                     because_titles = movies[movies['movieId'].isin(because)][['movieId', 'title']]
                     because_list = ', '.join(because_titles['title'].tolist())
-                    st.write(f'- **{rec_df[rec_df['movieId'] == mid]['title'].iloc[0]}** - because you watched {because_list}')
+                    st.write(f"- **{rec_df[rec_df['movieId'] == mid]['title'].iloc[0]}** - because you watched {because_list}")
                 else:
-                    st.write(f'- **{rec_df[rec_df['movieId'] == mid]['title'].iloc[0]}**')
+                    st.write(f"- **{rec_df[rec_df['movieId'] == mid]['title'].iloc[0]}**")
             st.caption('Filtering: item-based collaborative filtering using cosine similarity.')
