@@ -13,15 +13,15 @@ class WalmartPaths():
 
     @property
     def store_path(self) -> Path:
-        return self.data_dir / 'stores.csv'
+        return self.data_dir / 'raw/stores.csv'
 
     @property
     def features_path(self) -> Path:
-        return self.data_dir / 'features.csv'
+        return self.data_dir / 'raw/features.csv'
     
     @property
     def sales_path(self) -> Path:
-        return self.data_dir / 'sales.csv'
+        return self.data_dir / 'raw/sales.csv'
     
 REQUIRED_STORES_COLUMNS = { 'Store', 'Type', 'Size' }
 REQUIRED_FEATURES_COLUMNS = { 'Store', 'Date', 'Temperature', 'Fuel_Price', 'MarkDown1', 
