@@ -74,6 +74,13 @@ def load_features(path: str | Path) -> pd.DataFrame:
 
     # Map 'Yes" and 'No' to '1' and '0', respectively
     df['IsHoliday'] = df['IsHoliday'].map({ True: 1, False: 0 })
+
+    # Drop markdowns as they have a large number of missing values.
+    # A missing markdown usually means "No promotion applied." But in our case,
+    # seasonability, holidays, and store characteristics already give us rich
+    # signals to predict sales; so we can easily drop missing markdown columns."
+    markdown_cols = [f'MarkDown{i}' for i in range(1, 6)]
+    df = df.drop(columns = markdown_cols)
     
     return df
 
