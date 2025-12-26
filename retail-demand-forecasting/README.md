@@ -24,33 +24,32 @@ The original dataset was denormalized; it was restructured into a production-sty
 ## Key Steps
 
 1. **Data Preparation**
-
-- Schema normalization and type alignment
-- Time-aware merges with cardinality validation
-- Removal of sparse promotional features (markdowns)
+    - Schema normalization and type alignment
+    - Time-aware merges with cardinality validation
+    - Removal of sparse promotional features (markdowns)
 
 2. **Exploratory Data Analysis (EDA)**
-
-- Demand distribution analysis (right-skewed sales)
-- Seasonality and holiday effects
-- Structural impact of store size and type
-- Correlation analysis
+    - Demand distribution analysis (right-skewed sales)
+    - Seasonality and holiday effects
+    - Structural impact of store size and type
+    - Correlation analysis
 
 3. **Feature Engineering**
-- Lag features (e.g., last week’s sales)
-- Rolling statistics (4-week and 8-week averages)
-- Calendar features (week of year, year)
-- Leakage-safe transformations using shift()
+    - Lag features (e.g., last week’s sales)
+    - Rolling statistics (4-week and 8-week averages)
+    - Calendar features (week of year, year)
+    - Leakage-safe transformations using `shift()`
 
 4. **Modeling & Evaluation**
-- Naive Lag-1 baseline
-- Linear Regression
-- Random Forest
-- Gradient Boosting (best performer)
+    - Naive Lag-1 baseline
+    - Linear Regression
+    - Random Forest
+    - Gradient Boosting (best performer)
 
 5. **Interpretability**
-- Feature importance analysis
-- SHAP global and local explanations
+    - Feature importance analysis
+    - SHAP global and local explanations
+
 
 ## Results
 
