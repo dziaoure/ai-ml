@@ -4,6 +4,10 @@
 
 This project presents an end-to-end retail demand forecasting pipeline using weekly Walmart sales data. The objective is to predict future weekly sales while accounting for seasonality, holidays, store characteristics, and recent demand patterns. The project emphasizes time-series rigor, feature engineering, baseline comparisons, and model interpretability.
 
+## Demo
+
+![Streamlit Demo](images/app-screenshot.png)
+
 ## Problem Statement
 
 Accurate demand forecasting is critical for inventory planning, supply chain optimization, and promotional strategy. Using historical weekly sales data, this project builds and evaluates forecasting models that predict future demand while avoiding common pitfalls such as data leakage and improper validation.
