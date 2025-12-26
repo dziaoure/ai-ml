@@ -27,7 +27,7 @@ def build_user_item_matrix(
     use_implicit: bool = True
 ) -> Tuple[csr_matrix, np.ndarray, np.ndarray, Dict[int, int], Dict[int, int]]:
     '''
-    Builds a sparse user-item matrix from rtings
+    Builds a sparse user-item matrix from ratings
 
     if use_implicity = True:
         - treat any rating as an interaction of value 1.0
@@ -72,7 +72,7 @@ def fit_item_cf(
     )
 
     # Cosine similarity between solumns (items)
-    # Easiest is to compute on transposed matrixL (items x users)
+    # Easiest is to compute on transposed matrix (items x users)
     item_user = uim.T   # shape: (num_items, num_users)
 
     sim = cosine_similarity(item_user, dense_output=True)   # (num_items, num_items)
@@ -105,8 +105,8 @@ def recommend_for_user_item_cf(
     Recomend top-k items for a user using item-item CF
 
     Method:
-    - user profile = items they;ve interacted with in training
-    - socre(candidate item) = sum(sim(candidate, item_seen))
+    - user profile = items they've interacted with in training
+    - score(candidate item) = sum(sim(candidate, item_seen))
     - return top-k unseen items
     '''
     if user_id not in model.user_id_to_index:

@@ -35,9 +35,9 @@ def load_ratings(path:str | Path) -> pd.DataFrame:
     missing = REQUIRED_RATINGS_COLS - set(df.columns)
 
     if missing:
-        raise ValueError(f'ratinbs.csv missing required columns: {sorted(missing)}')
+        raise ValueError(f'ratings.csv missing required columns: {sorted(missing)}')
     
-    # Enfore dtypes
+    # Enforce dtypes
     df = df.copy()
     df['userId'] = df['userId'].astype('int')
     df['movieId'] = df['movieId'].astype('int')
