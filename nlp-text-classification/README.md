@@ -1,4 +1,4 @@
-# Project 4 — NLP Text Classification (AG News)
+# NLP Text Classification (AG News)
 
 ## Overview
 This project builds an end-to-end NLP text classification system that predicts the topic of a news article:
@@ -69,3 +69,21 @@ Short headlines with limited context also increase ambiguity.
 Potential improvements include:
 - character n-grams for robustness
 - transformer-based models to capture semantic context
+
+## Demo Preview
+
+The Streamlit app allows users to:
+- paste or select example news text
+- view the predicted topic
+- inspect decision scores across all classes
+- see which tokens most influenced the prediction
+
+This improves transparency and trust, especially for non-technical users.
+
+Run:
+```bash
+streamlit run app/app.py
+```
+
+
+![Streamlit Demo](images/app-screenshot.jpg)
