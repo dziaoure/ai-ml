@@ -162,7 +162,7 @@ def main():
     )
 
     # Show the "ground truth" expected values for this simulation (great for explantion)
-    st.subheader('Experiment Ground Truth (for this simulation')
+    st.subheader('Experiment Ground Truth (for this simulation)')
     ev_df = compute_expected_value_table(cfg.prices, cfg.probs)
     st.dataframe(ev_df, width='stretch')
 
