@@ -12,7 +12,7 @@ The system includes:
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Given a user’s historical interactions (movie ratings),  
 **recommend the top-K movies** they are most likely to enjoy next.
@@ -24,7 +24,7 @@ This mirrors common personalization problems in:
 
 ---
 
-## 📦 Dataset
+## Dataset
 
 - **MovieLens (ml-latest-small)**
 - Source: GroupLens Research
@@ -40,7 +40,7 @@ Each rating includes:
 
 ---
 
-## 🧠 Approach
+## Approach
 
 ### 1. Data Splitting
 - **Time-based split per user**
@@ -67,7 +67,7 @@ Each rating includes:
 
 ---
 
-## 📊 Evaluation
+## Evaluation
 
 Models are evaluated using:
 - Precision@K
@@ -79,7 +79,7 @@ making the metrics realistic and leakage-free.
 
 ---
 
-## 🖥️ Interactive Demo (Streamlit)
+## Interactive Demo (Streamlit)
 
 The project includes a Streamlit app that allows you to:
 - Select a user
@@ -92,3 +92,5 @@ The project includes a Streamlit app that allows you to:
 ```bash
 streamlit run app/app.py
 ```
+
+![Streamlit Demo](images/app-screenshot.jpg)

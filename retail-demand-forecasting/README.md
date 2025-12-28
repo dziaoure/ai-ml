@@ -4,9 +4,6 @@
 
 This project presents an end-to-end retail demand forecasting pipeline using weekly Walmart sales data. The objective is to predict future weekly sales while accounting for seasonality, holidays, store characteristics, and recent demand patterns. The project emphasizes time-series rigor, feature engineering, baseline comparisons, and model interpretability.
 
-## Demo
-
-![Streamlit Demo](images/app-screenshot.png)
 
 ## Problem Statement
 
@@ -62,6 +59,14 @@ The original dataset was denormalized; it was restructured into a production-sty
 
 
 **Gradient Boosting significantly outperformed all baselines by capturing nonlinear relationships and interactions in demand dynamics.**
+
+### Run the app:
+```bash
+streamlit run app/app.py
+```
+
+![Streamlit Demo](images/app-screenshot.jpg)
+
 
 ## Key Insights
 
