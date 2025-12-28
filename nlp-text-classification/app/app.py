@@ -154,7 +154,7 @@ def main():
         }).sort_values('Decision score', ascending=False)
 
         st.write('### Class scores')
-        st.dataframe(score_df, use_container_width=True)
+        st.dataframe(score_df, width='stretch')
 
         st.write('### Top token contributions (for predicted class)')
         expl = explain_prediction(model, text, top_k=top_k)
@@ -165,7 +165,7 @@ def main():
         expl_display['weight'] = expl_display['weight'].map(lambda x: float(f'{x:.4f}'))
         expl_display['contribution'] = expl_display['contribution'].map(lambda x: float(f'{x:.4f}'))
 
-        st.dataframe(expl_display, use_container_width=True)
+        st.dataframe(expl_display, width='stretch')
 
         st.caption(
             'Contribution = TF-IDF(token) * weight(token, predicted_class). '
