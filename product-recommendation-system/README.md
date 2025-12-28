@@ -91,3 +91,4 @@ The project includes a Streamlit app that allows you to:
 ### Run the app:
 ```bash
 streamlit run app/app.py
+```

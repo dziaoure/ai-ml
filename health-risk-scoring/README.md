@@ -125,7 +125,7 @@ jupyter notebook notebooks/modeling.ipynb
 A simple interactive interface for making predictions with the trained model.
 
 ```bash
-streamlit run app/streamlit_app.py
+streamlit run app/app.py
 ```
 
 
