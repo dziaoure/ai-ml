@@ -1,3 +1,5 @@
+import sys
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,6 +8,12 @@ import shap
 
 import matplotlib.pyplot as plt
 from pathlib import Path
+
+# --- Fix imports when runing `streamlit` from `/app`
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 #-----------------------------------------------
@@ -22,7 +30,7 @@ st.set_page_config(
 #   1. App Styles
 # ----------------------------------------------
 def load_css():
-    css_path = Path(__file__).resolve().parent / "styles.css"
+    css_path = PROJECT_ROOT / "app/styles.css"
 
     with open(css_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html = True)
@@ -31,7 +39,8 @@ load_css()
 
 col1, col2, col3 = st.columns([2, 1, 2])
 with col2:
-    st.image("../images/medical-symbol.png", width=200)
+    image_path = PROJECT_ROOT / 'images/medical-symbol.png'
+    st.image(image_path, width=200)
 
 
 st.title('Health Risk Scoring Model')
@@ -50,10 +59,11 @@ st.markdown(
 # ----------------------------------------------
 
 def load_artifacts():
-    model_path = Path(__file__).resolve().parent.parent / 'models' / 'health_risk_model.joblib'
-    data_path = Path(__file__).resolve().parent.parent / 'data' / 'raw' / 'framingham_heart_study.csv'
+    model_path = PROJECT_ROOT / 'models/health_risk_model.joblib'
+    data_path = PROJECT_ROOT / 'data' / 'raw' / 'framingham_heart_study.csv'
 
     model = joblib.load(model_path)
+
     df = pd.read_csv(data_path)
     X = df.drop(columns = ['TenYearCHD'])
 
