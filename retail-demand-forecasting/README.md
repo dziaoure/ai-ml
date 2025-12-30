@@ -61,8 +61,11 @@ The original dataset was denormalized; it was restructured into a production-sty
 **Gradient Boosting significantly outperformed all baselines by capturing nonlinear relationships and interactions in demand dynamics.**
 
 ### Run the app:
+
+Run the following command from the repository root.
+
 ```bash
-streamlit run app/app.py
+./run_app.sh retail-demand-forecasting/app/app.py
 ```
 
 ![Streamlit Demo](images/app-screenshot.jpg)

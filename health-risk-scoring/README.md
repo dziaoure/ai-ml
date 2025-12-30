@@ -122,10 +122,10 @@ jupyter notebook notebooks/modeling.ipynb
 
 ### 3. (Optional) Launch the Streamlit app
 
-A simple interactive interface for making predictions with the trained model.
+Run the following command from the repository root.
 
 ```bash
-streamlit run app/app.py
+./run_app.sh health-risk-scoring/app/app.py
 ```
 
 

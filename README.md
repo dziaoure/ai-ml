@@ -91,3 +91,11 @@ Each project folder contains:
 - demo applications where relevant
 
 Start with the project READMEs for context and results.
+
+## Running the Streamlit apps
+
+To run any of the demo apps, execute the `run_app.sh` script and specify the path to the `app.py` file for that demo, as specified below.
+
+```bash
+./run_app <demo_folder>/app/app.py
+```
