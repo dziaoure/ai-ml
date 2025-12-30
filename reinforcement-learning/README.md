@@ -110,8 +110,11 @@ The interactive dashboard allows users to:
 
 
 ## Run the app
-```
-streamlit run app/app.py
+
+Run the following command from the repository root.
+
+```bash
+./run_app.sh reinforcement-learning/app/app.py
 ```
 
 

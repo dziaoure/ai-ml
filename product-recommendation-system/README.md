@@ -88,9 +88,10 @@ The project includes a Streamlit app that allows you to:
 - View recent user history
 - See **“Because you watched…”** explanations for filtering-based recommendations
 
-### Run the app:
+Run the following command from the repository root.
+
 ```bash
-streamlit run app/app.py
+./run_app.sh product-recommendation-system/app/app.py
 ```
 
 ![Streamlit Demo](images/app-screenshot.jpg)
